@@ -1,0 +1,19 @@
+{
+    "name": "mula/express-checkout",
+    "description": "This is a php package that helps developers to set up the mula Express checkout quickly.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Samuel Kubai Kamau",
+            "email": "samuel.kamau@cellulant.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "psr-4": {
+            "Mula\\": "src/"
+        }
+    }
+}
