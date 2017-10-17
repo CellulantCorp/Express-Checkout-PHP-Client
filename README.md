@@ -2,7 +2,7 @@
 This is a composer package that aims to encapsulate most of the server side set needed when integrating your site to the Mula express checkout. Features included:
 1. Encryption
 2. Decryption
-3. Response formatting. (Returns the format expected by the payment callback. Visit [Mula express checkout documentation](https://beep2.cellulant.com:9001/hub/checkoutDocumentation/express.html#add-mula-button) for more on this.)
+3. Response formatting. (Returns the format expected by the payment callback. Visit [Mula express checkout documentation](https://beep2.cellulant.com:9211/docs/express) for more on this.)
 
 ## Getting started
 This is a composer package and can thus pull it in by adding; <br>
@@ -61,7 +61,7 @@ $data = (new ResponseProcessor(
 This is a composer package that aims to encapsulate most of the server side set needed when integrating your site to the Mula express checkout. Features included:
 1. Encryption
 2. Decryption
-3. Response formatting. (Returns the format expected by the payment callback. Visit [Mula express checkout documentation](https://beep2.cellulant.com:9001/hub/checkoutDocumentation/express.html#add-mula-button) for more on this.)
+3. Response formatting. (Returns the format expected by the payment callback. Visit [Mula express checkout documentation](https://beep2.cellulant.com:9211/docs/express) for more on this.)
 
 ## Getting started
 This is a composer package and can thus pull it in by adding; <br>
