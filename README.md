@@ -28,14 +28,14 @@ const params = {
 	  transactionID: no,
 	  serviceCode: '<serviceCode>',
 	  productCode: '',
-      payerClientCode:"",
+      	  payerClientCode:"",
 	  MSISDN: '<mobileNumber>',
 	  countryCode: '<countrycode>',
-      accessKey:"<access key>",
+          accessKey:"<access key>",
 	  dueDate: '2018-10-17 19:30:00',
 	  successRedirectUrl:"http://localhost/mula-checkout/success.php",
-      failRedirectUrl: "http://localhost/mula-checkout/failed.php",
-      paymentWebhookUrl: "http://localhost/mula-checkout/payment_webhook.php"
+          failRedirectUrl: "http://localhost/mula-checkout/failed.php",
+          paymentWebhookUrl: "http://localhost/mula-checkout/payment_webhook.php"
   };
 
 ...
