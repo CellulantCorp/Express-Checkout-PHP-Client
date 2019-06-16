@@ -1,0 +1,64 @@
+<!-- The "Pay with mula" button needs to have the "mula-checkout-button" class -->
+<a class="checkout-button"></a>
+
+<!-- Include a polyfil for to support the old browsers -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.17/webcomponents-loader.js"></script>
+
+<!-- Include the mula Express checkout library -->
+<script id="mula-checkout-library" type="text/javascript" src="https://beep2.cellulant.com:9212/checkout/v2/mula-checkout.js" charset="utf-8"></script>
+<!-- Initialize the "Pay with mula" button -->
+<script type="text/javascript">
+  // End point to your service that handles encryption
+  const merchantURL = "http://localhost/checkout/encrypt/Encrypt.php";
+    const no = Math.floor((Math.random() * 50000000) + 10000000);
+
+  const params = {
+	  merchantTransactionID: no,
+	  customerFirstName: 'Customer',
+	  customerLastName: 'Customer',
+	  customerEmail: 'test@gmail.com',
+	  amount: 100,
+	  accountNumber: no,
+	  currencyCode: '<currencyCode>',
+	  languageCode: 'en',
+	  serviceDescription: 'Payment for x service',
+	  transactionID: no,
+	  serviceCode: '<serviceCode>',
+	  productCode: '',
+          payerClientCode:"",
+	  MSISDN: '<mobileNumber>',
+	  countryCode: '<countrycode>',
+          accessKey:"<access key>",
+	  dueDate: '2018-10-17 19:30:00',
+	  successRedirectUrl:"http://localhost/mula-checkout/success.php",
+          failRedirectUrl: "http://localhost/mula-checkout/failed.php",
+          paymentWebhookUrl: "http://localhost/mula-checkout/payment_webhook.php"
+  }; // The params to be encrypted
+ 
+MulaCheckout.addPayWithMulaButton({ className:'checkout-button', checkoutType:'express'});
+
+  // Initialize the mula checkout modal/redirect
+            //on button click, redirect to express checkout
+            document.querySelector(".mula-checkout-button").addEventListener("click", function () {
+
+		    function encrypt() {
+		        return fetch(
+				merchantURL, 
+				{
+					method:'POST', 
+					body:JSON.stringify(params),
+					mode:'cors'
+				}).then(response => response.json())
+		    }
+
+		    encrypt().then(response => {
+			MulaCheckout.renderMulaCheckout({
+		                    checkoutType: "express",
+                		    merchantProperties: response,
+	        	        });
+			    }
+		   	 )
+			    .catch(error => console.log(error));;
+
+	    });
+</script>
