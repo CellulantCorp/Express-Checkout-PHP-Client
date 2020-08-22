@@ -11,7 +11,7 @@ This is a composer package and can thus pull it in by adding; <br>
 to your composer.json `require` object and running 
 `composer update`
 
-## Encrypting the request data
+## Encrypting the request data and rendering checkout
 Before you send your parameters to the express checkout, you are required to encrypt them so as to protect your data from being read or changed by any man-in-the-middle attacks. The below params are the request params
 
 ```php
@@ -39,8 +39,40 @@ const params = {
           paymentWebhookUrl: "http://localhost/tingg-checkout/payment_webhook.php"
   };
 
+$checkout = new Checkout(
+    'SECRET_KEY_GOES_HERE',
+    'IV_KEY_GOES_HERE'
+);
+
+$encryptedParams = $checkout->encrypt($payload);
 ...
 ```
+
+Proceed to render checkout below
+<button class="awesome-checkout-button">Proceed to Payment page</button>
+<script src="https://developer.tingg.africa/checkout/v2/tingg-checkout.js"></script>
+<script type="text/javascript">
+
+Tingg.renderPayButton({
+    className: 'awesome-checkout-button', 
+    checkoutType: 'redirect'
+});
+
+
+document.querySelector('.awesome-checkout-button').addEventListener('click', function() {
+    
+    Tingg.renderCheckout({
+            merchantProperties: {        
+                "params": "<?php echo $encryptedParams ?>",
+                "accessKey": "ACCESS_KEY_GOES_HERE",
+                "countryCode": "<countryCode"
+            },
+            checkoutType: 'redirect' // or modal
+        });
+});    
+
+</script>
+
 
 ## Adding the Tingg button on your webpage
 <!-- The "Pay with Tingg" button needs to have the "checkout-button" class -->
