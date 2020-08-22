@@ -52,7 +52,7 @@ Tingg.addPayWithMulaButton({ className:'checkout-button', checkoutType:'redirect
 		    }
 
 		    encrypt().then(response => {
-			Tingg.renderMulaCheckout({
+			Tingg.renderCheckout({
 		                    checkoutType: "redirect",
                 		    merchantProperties: response,
 	        	        });
