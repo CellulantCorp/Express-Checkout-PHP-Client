@@ -1,23 +1,23 @@
-<!-- The "Pay with mula" button needs to have the "mula-checkout-button" class -->
+<!-- The "Pay with Tingg" button needs to have the "checkout-button" class -->
 <a class="checkout-button"></a>
 
 <!-- Include a polyfil for to support the old browsers -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/1.0.17/webcomponents-loader.js"></script>
 
 <!-- Include the mula Express checkout library -->
-<script id="mula-checkout-library" type="text/javascript" src="https://beep2.cellulant.com:9212/checkout/v2/mula-checkout.js" charset="utf-8"></script>
+<script id="mula-checkout-library" type="text/javascript" src="https://developer.tingg.africa/checkout/v2/tingg-checkout.js" charset="utf-8"></script>
 <!-- Initialize the "Pay with mula" button -->
 <script type="text/javascript">
   // End point to your service that handles encryption
-  const merchantURL = "http://localhost/checkout/encrypt/Encrypt.php";
-    const no = Math.floor((Math.random() * 50000000) + 10000000);
+  const merchantURL = "http://localhost/tingg-checkout/encrypt/Encrypt.php";
+  const no = Math.floor((Math.random() * 50000000) + 10000000);
 
   const params = {
 	  merchantTransactionID: no,
-	  customerFirstName: 'Customer',
-	  customerLastName: 'Customer',
+	  customerFirstName: 'Customer first name',
+	  customerLastName: 'Customer last name',
 	  customerEmail: 'test@gmail.com',
-	  amount: 100,
+	  amount: '<chargeAmountToPay>',
 	  accountNumber: no,
 	  currencyCode: '<currencyCode>',
 	  languageCode: 'en',
@@ -29,17 +29,17 @@
 	  MSISDN: '<mobileNumber>',
 	  countryCode: '<countrycode>',
           accessKey:"<access key>",
-	  dueDate: '2018-10-17 19:30:00',
-	  successRedirectUrl:"http://localhost/mula-checkout/success.php",
-          failRedirectUrl: "http://localhost/mula-checkout/failed.php",
-          paymentWebhookUrl: "http://localhost/mula-checkout/payment_webhook.php"
+	  dueDate: 'Y-m-d H:i:s  ie 2020-08-20 19:30:00',
+	  successRedirectUrl:"http://localhost/tingg-checkout/success.php",
+          failRedirectUrl: "http://localhost/tingg-checkout/failed.php",
+          paymentWebhookUrl: "http://localhost/tingg-checkout/payment_webhook.php"
   }; // The params to be encrypted
  
-MulaCheckout.addPayWithMulaButton({ className:'checkout-button', checkoutType:'express'});
+Tingg.addPayWithMulaButton({ className:'checkout-button', checkoutType:'redirect'});
 
   // Initialize the mula checkout modal/redirect
             //on button click, redirect to express checkout
-            document.querySelector(".mula-checkout-button").addEventListener("click", function () {
+            document.querySelector(".checkout-button").addEventListener("click", function () {
 
 		    function encrypt() {
 		        return fetch(
@@ -52,8 +52,8 @@ MulaCheckout.addPayWithMulaButton({ className:'checkout-button', checkoutType:'e
 		    }
 
 		    encrypt().then(response => {
-			MulaCheckout.renderMulaCheckout({
-		                    checkoutType: "express",
+			Tingg.renderMulaCheckout({
+		                    checkoutType: "redirect",
                 		    merchantProperties: response,
 	        	        });
 			    }
