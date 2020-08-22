@@ -1,0 +1,56 @@
+<?php 
+require_once 'checkout-encryption.php';
+
+$payload = array(
+    "merchantTransactionID" => uniqueid(), //needs to be unique all the time
+    "customerFirstName" => "John",
+    "customerLastName" => "Doe",
+    "MSISDN" => "+254777777777",
+    "customerEmail" => "john.doe@example.com",
+    "requestAmount" => "<amountToPay>",
+    "currencyCode" => "<currencyCode>",
+    "accountNumber" => "<accountNumber>",
+    "serviceCode" => "YOUR_SERVICE_CODE_GOES_HERE",
+    "dueDate" => "2020-08-20 23:59:59",
+    "requestDescription" => "Dummy merchant transaction",
+    "countryCode" => "<countryCode>",
+    "languageCode" => "en",
+    successRedirectUrl:"http://localhost/tingg-checkout/success.php",
+    failRedirectUrl: "http://localhost/tingg-checkout/failed.php",
+    paymentWebhookUrl: "http://localhost/tingg-checkout/payment_webhook.php"
+);
+
+$checkout = new Checkout(
+    'SECRET_KEY_GOES_HERE',
+    'IV_KEY_GOES_HERE'
+);
+
+$encryptedParams = $checkout->encrypt($payload);
+
+// echo $encryptedParams; die;
+
+?>
+
+<button class="awesome-checkout-button">Proceed to Payment page</button>
+<script src="https://developer.tingg.africa/checkout/v2/tingg-checkout.js"></script>
+<script type="text/javascript">
+
+Tingg.renderPayButton({
+    className: 'awesome-checkout-button', 
+    checkoutType: 'redirect'
+});
+
+
+document.querySelector('.awesome-checkout-button').addEventListener('click', function() {
+    
+    Tingg.renderCheckout({
+            merchantProperties: {        
+                "params": "<?php echo $encryptedParams ?>",
+                "accessKey": "ACCESS_KEY_GOES_HERE",
+                "countryCode": "KE"
+            },
+            checkoutType: 'redirect' // or modal
+        });
+});    
+
+</script>
